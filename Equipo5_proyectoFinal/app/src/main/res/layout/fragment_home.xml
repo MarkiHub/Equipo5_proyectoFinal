@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.home.HomeFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/listatitulo"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/margin_top_header"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="@dimen/text_header_size"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/proxasign"
+            android:layout_margin="5dp"
+            />
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/compleasign"
+            android:layout_margin="5dp"
+            />
+    </GridLayout>
+    <GridView
+        android:id="@+id/tareas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ></GridView>
+
+
+</LinearLayout>

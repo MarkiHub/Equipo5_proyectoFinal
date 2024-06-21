@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Equipo5_proyectoFinal</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="iniciar_sesion">Iniciar sesion</string>
+    <string name="correo_is">Correo:</string>
+    <string name="contrasena_is">Contraseña:</string>
+    <string name="button_is">Iniciar sesion</string>
+    <string name="button_registrar">Registrarse</string>
+    <string name="button_olcontra"><u>Olvide la contraseña</u></string>
+    <string name="listatitulo">Lista de tareas</string>
+    <string name="proxasign">Proximas</string>
+    <string name="compleasign">Completadas</string>
+</resources>
