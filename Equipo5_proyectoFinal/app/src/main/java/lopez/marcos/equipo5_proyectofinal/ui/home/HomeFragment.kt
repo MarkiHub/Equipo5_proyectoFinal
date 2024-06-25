@@ -1,5 +1,6 @@
 package lopez.marcos.equipo5_proyectofinal.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import lopez.marcos.equipo5_proyectofinal.AgregarActivity
+import lopez.marcos.equipo5_proyectofinal.R
 import lopez.marcos.equipo5_proyectofinal.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -27,10 +30,10 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        val fab: View = root.findViewById(R.id.fab)
+        fab.setOnClickListener { view ->
+            var intento: Intent = Intent(root.context,AgregarActivity::class.java)
+            startActivity(intento)
         }
         return root
     }

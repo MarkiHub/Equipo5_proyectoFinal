@@ -28,6 +28,14 @@ class MainActivity : AppCompatActivity() {
             var intento: Intent = Intent(this, NavActivity::class.java)
             this.startActivity(intento)
         }
+        button_registrar.setOnClickListener {
+            var intento: Intent = Intent(this,RegistroActiviy::class.java)
+            startActivity(intento)
+        }
+        button_olvide.setOnClickListener {
+            var intento: Intent = Intent(this,OlvidarContraActivity::class.java)
+            startActivity(intento)
+        }
 
     }
 }

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_top_header"
+        android:text= "Recuperar contraseña"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="50dp"
+        android:textAlignment="center"/>
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/correo_is"
+            android:textSize="20dp"/>
+        <EditText
+            android:id="@+id/correo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:inputType="textEmailAddress"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/contrasena_is"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            />
+        <EditText
+            android:id="@+id/contrasena"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:inputType="textPassword"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/rcontrasena_re"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            />
+        <EditText
+            android:id="@+id/rcontrasena"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:inputType="textPassword"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/reestablecer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:layout_gravity="right"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="30dp"
+        android:text="Reestablecer contraseña"
+        android:textColor="@color/white"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        />
+
+</LinearLayout>

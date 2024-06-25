@@ -35,6 +35,14 @@
             android:layout_margin="5dp"
             />
     </GridLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/baseline_add_24"
+        android:contentDescription="agregar"
+        android:layout_margin="16dp" />
     <GridView
         android:id="@+id/tareas"
         android:layout_width="match_parent"
