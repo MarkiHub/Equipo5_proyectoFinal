@@ -30,4 +30,9 @@
     <string name="title_activity_nuevo_ciclo">NuevoCicloActivity</string>
     <string name="title_activity_olvidar_contra">OlvidarContraActivity</string>
     <string name="title_activity_editar">EditarActivity</string>
+    <string name="titulo_estadistica">Estadisticas</string>
+    <string name="fecha_inicio">Fecha Inicio:</string>
+    <string name="fecha_fin">Fecha Fin:</string>
+    <string name="asignacion">Asignacion:</string>
+    <string name="rendimiento">Rendimiento Academico</string>
 </resources>
