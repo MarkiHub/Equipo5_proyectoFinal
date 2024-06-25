@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_top_header"
+        android:text="@string/perfil"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="50dp"
+        android:textAlignment="center"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        >
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|top"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/nombre_re"
+                android:textSize="20dp"/>
+            <EditText
+                android:id="@+id/nombre"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:inputType="text"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/correo_is"
+                android:textSize="20dp"/>
+            <EditText
+                android:id="@+id/correo"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:inputType="textEmailAddress"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Ciclo actual"
+                android:textSize="20dp"/>
+            <Spinner
+                android:id="@+id/asignaturas"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                />
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="40dp"
+                >
+                <Button
+                    android:id="@+id/actualizar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_button"
+                    android:layout_gravity="left"
+                    android:text="Actualizar"
+                    android:textColor="@color/white"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    />
+                <Button
+                    android:id="@+id/nuevociclo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_button"
+                    android:layout_gravity="right"
+
+                    android:text="Nuevo ciclo"
+                    android:textColor="@color/white"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    />
+            </GridLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</LinearLayout>
