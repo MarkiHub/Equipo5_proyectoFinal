@@ -53,15 +53,19 @@ class NuevoCicloActivity : ComponentActivity() {
 
         class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val textView: TextView = itemView.findViewById(R.id.textView)
+            val deleteButton: Button = itemView.findViewById(R.id.eliminar)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_view2, parent, false)
             return MyViewHolder(view)
         }
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             holder.textView.text = itemList[position]
+            holder.deleteButton.setOnClickListener {
+                removeItem(position)
+            }
         }
 
         override fun getItemCount(): Int {
@@ -71,6 +75,14 @@ class NuevoCicloActivity : ComponentActivity() {
         fun addItem(item: String) {
             itemList.add(item)
             notifyItemInserted(itemList.size - 1)
+        }
+
+        private fun removeItem(position: Int) {
+            if (position >= 0 && position < itemList.size) {
+                itemList.removeAt(position)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position, itemList.size)
+            }
         }
     }
 }
