@@ -1,6 +1,8 @@
 package lopez.marcos.equipo5_proyectofinal.ui.home
 
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -21,8 +23,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import lopez.marcos.equipo5_proyectofinal.AgregarActivity
 import lopez.marcos.equipo5_proyectofinal.EditarActivity
 import lopez.marcos.equipo5_proyectofinal.Item
+import lopez.marcos.equipo5_proyectofinal.NotificationReceiver
 import lopez.marcos.equipo5_proyectofinal.R
 import lopez.marcos.equipo5_proyectofinal.databinding.FragmentHomeBinding
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class HomeFragment : Fragment() {
 
@@ -106,6 +113,7 @@ class HomeFragment : Fragment() {
                 .get()
                 .addOnSuccessListener { documents ->
                     val tareasPorDia = mutableMapOf<String, MutableList<Item.Tarea>>()
+                    val tareas = mutableListOf<Item.Tarea>()
 
                     for (document in documents) {
                         val id = document.id
@@ -118,6 +126,7 @@ class HomeFragment : Fragment() {
                         val estado = document.getString("estado") ?: "No disponible"
 
                         val tarea = Item.Tarea(nombre, asignatura, tipo, descripcion, prioridad, fecha, id, estado)
+                        tareas.add(tarea)
 
                         if (tareasPorDia.containsKey(fecha)) {
                             tareasPorDia[fecha]?.add(tarea)
@@ -137,7 +146,33 @@ class HomeFragment : Fragment() {
                     }
 
                     adapter.updateItems(itemList)
+
+                    programarNotificaciones(tareas)
                 }
+        }
+    }
+    private fun programarNotificaciones(tareas: List<Item.Tarea>) {
+        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+
+        for (tarea in tareas) {
+            val intent = Intent(context, NotificationReceiver::class.java).apply {
+                putExtra("notificationId", tarea.id.hashCode())
+                putExtra("message", "La tarea '${tarea.nombre}' vence hoy.")
+            }
+            val pendingIntent = PendingIntent.getBroadcast(context, tarea.id.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+            try {
+                val fechaEntrega = dateFormat.parse(tarea.fecha)?.time ?: continue
+
+                val triggerTime = fechaEntrega + TimeUnit.HOURS.toMillis(8)
+
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
+                Log.d("HomeFragment", "Notificación programada para la tarea '${tarea.nombre}' a las $triggerTime")
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
         }
     }
 
