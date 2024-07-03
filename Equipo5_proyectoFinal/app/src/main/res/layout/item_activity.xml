@@ -26,10 +26,10 @@
             android:layout_marginBottom="4dp"/>
 
         <TextView
-            android:id="@+id/textViewType"
+            android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tipo"
+            android:text="Nombre"
             android:layout_marginBottom="4dp"/>
 
         <TextView

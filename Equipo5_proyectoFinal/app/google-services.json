@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1049182101798",
+    "project_id": "scholarreminder",
+    "storage_bucket": "scholarreminder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049182101798:android:b3cfefd9b92a188e1561e7",
+        "android_client_info": {
+          "package_name": "lopez.marcos.equipo5_proyectofinal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD1sWHZpXlqcQ5oQ7X_BiNUQpyJqBQZMY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

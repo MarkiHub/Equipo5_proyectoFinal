@@ -1,6 +1,6 @@
 package lopez.marcos.equipo5_proyectofinal
 
 sealed class Item {
-    data class Day(val date: String) : Item()
-    data class Activity(val subject: String, val type: String, val description: String) : Item()
+    data class Dia(val fecha: String) : Item()
+    data class Tarea(val nombre: String, val asignatura: String, val tipo: String, val descripcion: String, val prioridad: String, val fecha: String, val id: String, val estado: String) : Item()
 }

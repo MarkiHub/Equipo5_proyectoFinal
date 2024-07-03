@@ -3,39 +3,89 @@ package lopez.marcos.equipo5_proyectofinal
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import lopez.marcos.equipo5_proyectofinal.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import lopez.marcos.equipo5_proyectofinal.NavActivity
+import lopez.marcos.equipo5_proyectofinal.OlvidarContraActivity
+import lopez.marcos.equipo5_proyectofinal.R
+import lopez.marcos.equipo5_proyectofinal.RegistroActiviy
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-
+    private lateinit var auth: FirebaseAuth
+    private lateinit var button_is: Button
+    private lateinit var button_registrar: Button
+    private lateinit var button_olvide: TextView
+    private lateinit var emailEditText: EditText
+    private lateinit var passwordEditText: EditText
+    var firebaseUser: FirebaseUser? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
 
-        val button_is: Button = findViewById(R.id.iniciar_sesion)
-        val button_registrar: Button = findViewById(R.id.registrar_is)
-        val button_olvide: TextView = findViewById(R.id.olvidecontrasena)
+        auth = FirebaseAuth.getInstance()
+
+        button_is = findViewById(R.id.iniciar_sesion)
+        button_registrar = findViewById(R.id.registrar_is)
+        button_olvide = findViewById(R.id.olvidecontrasena)
+
+        emailEditText = findViewById(R.id.correo)
+        passwordEditText = findViewById(R.id.contrasena)
+
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            startActivity(Intent(this, NavActivity::class.java))
+            finish()
+        }
 
         button_is.setOnClickListener {
-            var intento: Intent = Intent(this, NavActivity::class.java)
-            this.startActivity(intento)
+            val email = emailEditText.text.toString()
+            val password = passwordEditText.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            startActivity(Intent(this, NavActivity::class.java))
+                            finish()
+                        } else {
+                            Toast.makeText(baseContext, "Nombre y correo no encontrado.",
+                                Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            } else {
+                Toast.makeText(baseContext, "Campos vacios.",
+                    Toast.LENGTH_SHORT).show()
+            }
         }
+
+
+
         button_registrar.setOnClickListener {
-            var intento: Intent = Intent(this,RegistroActiviy::class.java)
-            startActivity(intento)
-        }
-        button_olvide.setOnClickListener {
-            var intento: Intent = Intent(this,OlvidarContraActivity::class.java)
+            val intento = Intent(this, RegistroActiviy::class.java)
             startActivity(intento)
         }
 
+        button_olvide.setOnClickListener {
+            val intento = Intent(this, OlvidarContraActivity::class.java)
+            startActivity(intento)
+        }
+    }
+
+    private fun comprobarSesion(){
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        if (firebaseUser != null) {
+            startActivity(Intent(this, NavActivity::class.java))
+            finish()
+        }
+    }
+
+    override fun onStart() {
+        comprobarSesion()
+        super.onStart()
     }
 }
