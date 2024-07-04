@@ -29,7 +29,6 @@ class AgregarActivity : AppCompatActivity() {
     private lateinit var materias_ciclo: ArrayList<String>
     private val tipo_asignacion: ArrayList<String> = ArrayList()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar)
@@ -42,9 +41,19 @@ class AgregarActivity : AppCompatActivity() {
         asignaturas = findViewById(R.id.asignaturas)
         registrarButton = findViewById(R.id.registrar)
 
+        nombreText = findViewById(R.id.nombre)
+        descripcionText = findViewById(R.id.descripcion)
+        prioridadGroup = findViewById(R.id.prioridadGroup)
+
         materias_ciclo = NavActivity.materias_ciclo
 
         fillTipo_asignacion()
+
+        if (materias_ciclo.isEmpty()) {
+            Toast.makeText(this, "Primero debe agregar un ciclo en la sección de perfil.", Toast.LENGTH_LONG).show()
+            registrarButton.isEnabled = false
+            return
+        }
 
         if (asignaturas != null) {
             val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, materias_ciclo)
@@ -61,7 +70,9 @@ class AgregarActivity : AppCompatActivity() {
         }
 
         registrarButton.setOnClickListener {
-            guardarTarea()
+            if (validateInputs()) {
+                guardarTarea()
+            }
         }
     }
 
@@ -87,18 +98,45 @@ class AgregarActivity : AppCompatActivity() {
         datePickerDialog.show()
     }
 
+    private fun validateInputs(): Boolean {
+        val nombre = nombreText.text.toString().trim()
+        val descripcion = descripcionText.text.toString().trim()
+        val fecha = etDate.text.toString().trim()
+        val prioridad = when (prioridadGroup.checkedRadioButtonId) {
+            R.id.radio_baja -> "Baja"
+            R.id.radio_media -> "Media"
+            R.id.radio_alta -> "Alta"
+            else -> ""
+        }
+
+        if (nombre.isEmpty()) {
+            nombreText.error = "El nombre es obligatorio"
+            return false
+        }
+
+        if (descripcion.isEmpty()) {
+            descripcionText.error = "La descripción es obligatoria"
+            return false
+        }
+
+        if (fecha.isEmpty()) {
+            etDate.error = "La fecha es obligatoria"
+            return false
+        }
+
+        if (prioridad.isEmpty()) {
+            Toast.makeText(this, "Por favor selecciona una prioridad", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
+    }
+
     private fun guardarTarea() {
-        nombreText = findViewById(R.id.nombre)
-        descripcionText = findViewById(R.id.descripcion)
-        prioridadGroup = findViewById(R.id.prioridadGroup)
-
         val descripcion = descripcionText.text.toString()
-
-
         val asignatura = materias_ciclo[findViewById<Spinner>(R.id.asignaturas).selectedItemPosition]
         val tipoAsignatura = tipo_asignacion[findViewById<Spinner>(R.id.tipo_asignatura).selectedItemPosition]
         val fecha = etDate.text.toString()
-
 
         val currentUser = auth.currentUser
 
@@ -126,12 +164,15 @@ class AgregarActivity : AppCompatActivity() {
                 .addOnSuccessListener { document ->
                     nombreText.setText("")
                     etDate.setText("")
-                    findViewById<EditText>(R.id.descripcion).setText("")
+                    descripcionText.setText("")
                     prioridadGroup.clearCheck()
 
                     Toast.makeText(this, "Tarea agregada exitosamente.", Toast.LENGTH_SHORT).show()
                     setResult(Activity.RESULT_OK)
                     finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error al agregar la tarea: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }

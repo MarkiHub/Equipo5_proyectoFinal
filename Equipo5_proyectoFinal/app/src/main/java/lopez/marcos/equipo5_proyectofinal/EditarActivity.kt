@@ -75,14 +75,16 @@ class EditarActivity : AppCompatActivity() {
         }
 
         actualizarButton.setOnClickListener {
-            actualizarTarea() }
-
+            if (validateInputs()) {
+                actualizarTarea()
+            }
+        }
 
         cancelarButton.setOnClickListener { finish() }
 
         completadaButton.setOnClickListener { marcarCompletada() }
 
-        eliminarButton.setOnClickListener{ eliminarTarea() }
+        eliminarButton.setOnClickListener { eliminarTarea() }
     }
 
     private fun setSpinnerSelection(spinner: Spinner, value: String?) {
@@ -95,16 +97,49 @@ class EditarActivity : AppCompatActivity() {
         }
     }
 
+    private fun validateInputs(): Boolean {
+        val nombre = nombreEditText.text.toString().trim()
+        val fecha = fechaEditText.text.toString().trim()
+        val descripcion = descripcionEditText.text.toString().trim()
+        val prioridad = when (prioridadRadioGroup.checkedRadioButtonId) {
+            R.id.radio_baja -> "Baja"
+            R.id.radio_media -> "Media"
+            R.id.radio_alta -> "Alta"
+            else -> ""
+        }
+
+        if (nombre.isEmpty()) {
+            nombreEditText.error = "El nombre es obligatorio"
+            return false
+        }
+
+        if (fecha.isEmpty()) {
+            fechaEditText.error = "La fecha es obligatoria"
+            return false
+        }
+
+        if (descripcion.isEmpty()) {
+            descripcionEditText.error = "La descripción es obligatoria"
+            return false
+        }
+
+        if (prioridad.isEmpty()) {
+            Toast.makeText(this, "Por favor selecciona una prioridad", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
+    }
+
     private fun actualizarTarea() {
-        val nombre = nombreEditText.text.toString()
-        val fecha = fechaEditText.text.toString()
-        val descripcion = descripcionEditText.text.toString()
+        val nombre = nombreEditText.text.toString().trim()
+        val fecha = fechaEditText.text.toString().trim()
+        val descripcion = descripcionEditText.text.toString().trim()
         val asignatura = asignaturaSpinner.selectedItem.toString()
         val tipo = tipoSpinner.selectedItem.toString()
         val prioridad = findViewById<RadioButton>(prioridadRadioGroup.checkedRadioButtonId).text.toString()
 
         tareaId?.let {
-            println("salio bien")
             val tareaRef = firestore.collection("tareas").document(it)
             tareaRef.update(
                 mapOf(
@@ -116,13 +151,15 @@ class EditarActivity : AppCompatActivity() {
                     "prioridad" to prioridad
                 )
             ).addOnSuccessListener {
-
                 Toast.makeText(this, "Tarea actualizada correctamente", Toast.LENGTH_SHORT).show()
                 setResult(Activity.RESULT_OK)
                 finish()
+            }.addOnFailureListener { e ->
+                Toast.makeText(this, "Error al actualizar la tarea: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
     private fun eliminarTarea() {
         val tareaId = intent.getStringExtra("actividadId")
 
@@ -134,8 +171,12 @@ class EditarActivity : AppCompatActivity() {
                     setResult(Activity.RESULT_OK)
                     finish()
                 }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error al eliminar la tarea: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
         }
     }
+
     private fun marcarCompletada() {
         tareaId?.let {
             firestore.collection("tareas").document(it)
@@ -144,6 +185,9 @@ class EditarActivity : AppCompatActivity() {
                     Toast.makeText(this, "Tarea marcada como completada", Toast.LENGTH_SHORT).show()
                     setResult(Activity.RESULT_OK)
                     finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error al marcar la tarea como completada: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }

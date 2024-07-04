@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var button_olvide: TextView
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
-    private lateinit var binding: ActivityMainBinding
     var firebaseUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

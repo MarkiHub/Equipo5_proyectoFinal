@@ -1,6 +1,10 @@
 package lopez.marcos.equipo5_proyectofinal
 
+import android.app.Activity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -49,6 +53,7 @@ class NavActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         obtenerNombreUsuario()
+        configCiclos()
     }
     private fun obtenerNombreUsuario() {
         val currentUser = auth.currentUser
@@ -70,5 +75,37 @@ class NavActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Usuario no autenticado.", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun cargarMateriasPorCiclo(ciclo: String) {
+        firestore.collection("ciclos").document(ciclo)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    actualizarMateriasCiclo(document["materias"] as? ArrayList<String> ?: emptyList())
+                }
+            }
+    }
+    private fun configCiclos() {
+        firestore.collection("ciclos")
+            .whereEqualTo("usuario", auth.currentUser?.uid)
+            .get()
+            .addOnSuccessListener { documents ->
+                val cicloIds = documents.map { it.id }
+
+
+                val selectedCicloId = getSelectedCiclo()
+                if (selectedCicloId != null) {
+                    val selectedIndex = cicloIds.indexOf(selectedCicloId)
+                    if (selectedIndex >= 0) {
+                        val cicloSeleccionado = cicloIds[selectedIndex]
+                        cargarMateriasPorCiclo(cicloSeleccionado)
+                    }
+                }
+            }
+    }
+    private fun getSelectedCiclo(): String? {
+        val sharedPreferences = getSharedPreferences("ciclos_${auth.currentUser?.uid}", Activity.MODE_PRIVATE)
+        return sharedPreferences.getString("selected_ciclo_id", null)
     }
 }
