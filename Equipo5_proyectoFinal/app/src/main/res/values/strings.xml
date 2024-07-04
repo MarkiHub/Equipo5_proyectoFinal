@@ -1,4 +1,5 @@
 <resources>
+    <string name="editar">Editar</string>
     <string name="app_name">Equipo5_proyectoFinal</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
