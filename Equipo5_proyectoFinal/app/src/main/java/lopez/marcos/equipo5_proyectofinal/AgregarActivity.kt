@@ -29,6 +29,7 @@ class AgregarActivity : AppCompatActivity() {
     private lateinit var materias_ciclo: ArrayList<String>
     private val tipo_asignacion: ArrayList<String> = ArrayList()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar)

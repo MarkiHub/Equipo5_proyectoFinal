@@ -50,7 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:paddingHorizontal="20dp"
-            android:inputType="date"
+            android:clickable="false"
+            android:focusable="false"
             android:id="@+id/fechaInicio"
             android:background="@color/gray"
             android:textColor="@color/white"
@@ -61,7 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="55dp"
             android:paddingHorizontal="20dp"
-            android:inputType="date"
+            android:clickable="false"
+            android:focusable="false"
             android:id="@+id/fechFin"
             android:background="@color/gray"
             android:textColor="@color/white"
@@ -79,6 +81,7 @@
         />
 
     <Spinner
+        android:id="@+id/tipo_asignatura"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@color/gray"
@@ -94,6 +97,7 @@
         />
 
     <Spinner
+        android:id="@+id/asignaturas"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@color/gray"
@@ -104,11 +108,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/rendimiento"
-        android:layout_marginStart="58dp"/>
+        android:layout_marginStart="58dp"
+        android:layout_marginBottom="50dp"/>
 
-    <ImageView
+    <com.echo.holographlibrary.BarGraph
+        android:id="@+id/barGraph"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/graficalineal"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

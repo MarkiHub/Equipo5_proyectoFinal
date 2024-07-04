@@ -13,6 +13,7 @@ import lopez.marcos.equipo5_proyectofinal.NavActivity
 import lopez.marcos.equipo5_proyectofinal.OlvidarContraActivity
 import lopez.marcos.equipo5_proyectofinal.R
 import lopez.marcos.equipo5_proyectofinal.RegistroActiviy
+import lopez.marcos.equipo5_proyectofinal.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +23,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var button_olvide: TextView
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
+    private lateinit var binding: ActivityMainBinding
     var firebaseUser: FirebaseUser? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
